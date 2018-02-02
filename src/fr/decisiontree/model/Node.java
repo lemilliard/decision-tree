@@ -20,6 +20,7 @@ public class Node {
 	private Config config;
 
 	public Node(Config config) {
+		this.attributIndex = -1;
 		this.config = config;
 		this.branches = new ArrayList<>();
 		this.entries = new ArrayList<>();
@@ -207,7 +208,7 @@ public class Node {
 		}
 
 		int max = 0;
-		int maxIndex = 0;
+		int maxIndex = -1;
 		for (int i = 0; i < p.size(); i++) {
 			if (p.get(i) > max) {
 				max = p.get(i);
@@ -262,27 +263,29 @@ public class Node {
 	}
 
 	private void print(String prefix, boolean isTail, String branchValue) {
-		boolean isFinal = branches.isEmpty();
-		String txt = prefix;
-		txt += !branchValue.equals("") ? isTail ? "└── " : "├── " : " ── ";
-		txt += !branchValue.equals("") ? ConsoleColors.BLUE + branchValue + ConsoleColors.RESET + " => "
-				: ConsoleColors.BLUE;
-		txt += isFinal ? ConsoleColors.GREEN + config.getDecisions().get(attributIndex) : ConsoleColors.RED + config
-				.getAttributByIndex(attributIndex)
-				.getName();
-		txt += " (" + attributIndex + ") " + ConsoleColors.RESET;
-		System.out.println(txt);
-		txt = prefix;
-		txt += isTail ? "     " : "│    ";
-		for (int i = 0; i < branches.size() - 1; i++) {
-			branchValue = config.getValue(attributIndex, branches.get(i).getValueIndex());
-			branchValue += " (" + branches.get(i).getValueIndex() + ")";
-			branches.get(i).getNode().print(txt, false, branchValue);
-		}
-		if (branches.size() > 0) {
-			branchValue = config.getValue(attributIndex, branches.get(branches.size() - 1).getValueIndex());
-			branchValue += " (" + branches.get(branches.size() - 1).getValueIndex() + ")";
-			branches.get(branches.size() - 1).getNode().print(txt, true, branchValue);
+		if (attributIndex != -1) {
+			boolean isFinal = branches.isEmpty();
+			String txt = prefix;
+			txt += !branchValue.equals("") ? isTail ? "└── " : "├── " : " ── ";
+			txt += !branchValue.equals("") ? ConsoleColors.BLUE + branchValue + ConsoleColors.RESET + " => "
+					: ConsoleColors.BLUE;
+			txt += isFinal ? ConsoleColors.GREEN + config.getDecisions().get(attributIndex) : ConsoleColors.RED + config
+					.getAttributByIndex(attributIndex)
+					.getName();
+			txt += " (" + attributIndex + ") " + ConsoleColors.RESET;
+			System.out.println(txt);
+			txt = prefix;
+			txt += isTail ? "     " : "│    ";
+			for (int i = 0; i < branches.size() - 1; i++) {
+				branchValue = config.getValue(attributIndex, branches.get(i).getValueIndex());
+				branchValue += " (" + branches.get(i).getValueIndex() + ")";
+				branches.get(i).getNode().print(txt, false, branchValue);
+			}
+			if (branches.size() > 0) {
+				branchValue = config.getValue(attributIndex, branches.get(branches.size() - 1).getValueIndex());
+				branchValue += " (" + branches.get(branches.size() - 1).getValueIndex() + ")";
+				branches.get(branches.size() - 1).getNode().print(txt, true, branchValue);
+			}
 		}
 	}
 }

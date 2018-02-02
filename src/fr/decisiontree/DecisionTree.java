@@ -87,9 +87,13 @@ public class DecisionTree {
 	}
 
 	public static String decide(String... params) {
+		String decision = null;
 		Entry entry = entryFromParams(params);
-		int decision = tree.decide(entry);
-		return config.getDecisions().get(decision);
+		int treeDecision = tree.decide(entry);
+		if (treeDecision != -1) {
+			decision = config.getDecisions().get(treeDecision);
+		}
+		return decision;
 	}
 
 	public static void addData(String... params) {
