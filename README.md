@@ -8,7 +8,7 @@ Librairie qui permet de générer et utiliser un arbre de décision
 ## Maven Local Repository
 
 Afin de faciliter l'utilisation de la librairie, il est fortement conseillé de la pousser
-sur le repository maven local. Pour se faire, il suffit de faire comme suit:
+sur le repository maven local. Il suffit de faire comme suit:
 
 ```sh
 mvn clean package
