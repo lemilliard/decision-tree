@@ -14,4 +14,15 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <distributionManagement>
+        <repository>
+            <id>thomaskintRepoWrite</id>
+            <url>${thomaskintRepoWriteUrl}</url>
+        </repository>
+        <snapshotRepository>
+            <id>thomaskintRepoWrite</id>
+            <url>${thomaskintRepoWriteUrl}</url>
+        </snapshotRepository>
+    </distributionManagement>
+
 </project>
