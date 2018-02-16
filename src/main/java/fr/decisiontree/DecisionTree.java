@@ -11,6 +11,7 @@ import java.nio.file.Files;
 
 import fr.decisiontree.model.Entry;
 import fr.decisiontree.model.Node;
+import fr.decisiontree.model.Result;
 
 public class DecisionTree {
 
@@ -86,14 +87,9 @@ public class DecisionTree {
 		}
 	}
 
-	public static String decide(String... params) {
-		String decision = null;
+	public static Result decide(String... params) {
 		Entry entry = entryFromParams(params);
-		int treeDecision = tree.decide(entry);
-		if (treeDecision != -1) {
-			decision = config.getDecisions().get(treeDecision);
-		}
-		return decision;
+		return tree.decide(entry);
 	}
 
 	public static void addData(String... params) {

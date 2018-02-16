@@ -1,5 +1,7 @@
 package fr.decisiontree;
 
+import fr.decisiontree.model.Result;
+
 public class Exemple {
 
 	public static void main(String... args) {
@@ -17,11 +19,13 @@ public class Exemple {
 
 		DecisionTree.print();
 
-		String decision = DecisionTree.decide("Soleil", null, "Normale", null);
-		System.out.println(decision);
+		Result decision = DecisionTree.decide("Soleil", "Basse", "Normale", "Fort");
+		System.out.println(decision.getValue());
+		System.out.println(decision.getRatio());
 
-		decision = DecisionTree.decide("Soleil", null, "Elevée", null);
-		System.out.println(decision);
+		decision = DecisionTree.decide("Couvert", "Basse", "Normale", "Fort");
+		System.out.println(decision.getValue());
+		System.out.println(decision.getRatio());
 
 		DecisionTree.save();
 	}

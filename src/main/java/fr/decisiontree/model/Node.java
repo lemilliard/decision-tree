@@ -149,7 +149,7 @@ public class Node {
 	 * @return
 	 */
 	private double partPertinence(int attributIndex, int valueIndex) {
-		return getRatio(attributIndex, valueIndex) * entropie(attributIndex, valueIndex);
+		return getValueRatio(attributIndex, valueIndex) * entropie(attributIndex, valueIndex);
 	}
 
 	/**
@@ -159,7 +159,7 @@ public class Node {
 	 * @param valueIndex
 	 * @return
 	 */
-	public double getRatio(int attributIndex, int valueIndex) {
+	public double getValueRatio(int attributIndex, int valueIndex) {
 		double count = 0d;
 
 		// Pour chaque entry
@@ -167,6 +167,23 @@ public class Node {
 			if (attributIndex + 1 > entry.getValues().size()) {
 				return 0d;
 			} else if (entry.getValues().get(attributIndex) == valueIndex) {
+				count++;
+			}
+		}
+
+		if (entries.size() == 0) {
+			return 0d;
+		}
+
+		return count / entries.size();
+	}
+
+	public double getResultatRatio(int attributIndex) {
+		double count = 0d;
+
+		// Pour chaque entry
+		for (Entry entry : entries) {
+			if (entry.getDecision().equals(attributIndex)) {
 				count++;
 			}
 		}
@@ -245,9 +262,13 @@ public class Node {
 		}
 	}
 
-	public int decide(Entry entry) {
+	public Result decide(Entry entry) {
 		if (getBranches().size() == 0) {
-			return attributIndex;
+			if (attributIndex != -1) {
+				String treeDecision = config.getDecisions().get(attributIndex);
+				double ratio = getResultatRatio(attributIndex);
+				return new Result(treeDecision, ratio);
+			}
 		} else {
 			for (Branch branch : getBranches()) {
 				if (entry.getValues().get(attributIndex).equals(branch.getValueIndex())) {
@@ -255,7 +276,7 @@ public class Node {
 				}
 			}
 		}
-		return -1;
+		return null;
 	}
 
 	public void print() {
