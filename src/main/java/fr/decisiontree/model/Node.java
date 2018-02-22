@@ -1,10 +1,10 @@
 package fr.decisiontree.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import fr.decisiontree.Config;
 import fr.decisiontree.utils.ConsoleColors;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by tkint on 23/11/2017.
@@ -84,6 +84,12 @@ public class Node {
 		}
 
 		for (int i = 0; i < p.length; i++) {
+			if (p[i] == 0) {
+				return 0d;
+			}
+		}
+
+		for (int i = 0; i < p.length; i++) {
 			p[i] /= entries.size();
 		}
 
@@ -104,6 +110,12 @@ public class Node {
 
 		for (Entry entry : entries) {
 			p[entry.getDecision()]++;
+		}
+
+		for (int i = 0; i < p.length; i++) {
+			if (p[i] == 0) {
+				return 0d;
+			}
 		}
 
 		for (int i = 0; i < p.length; i++) {
@@ -128,7 +140,7 @@ public class Node {
 
 	/**
 	 * Retourne la pertinence d'un attribut
-	 * 
+	 *
 	 * @param attributIndex
 	 * @return
 	 */
@@ -143,7 +155,7 @@ public class Node {
 
 	/**
 	 * Retourne la pertinence d'une valeur d'un attribut
-	 * 
+	 *
 	 * @param attributIndex
 	 * @param valueIndex
 	 * @return
@@ -154,7 +166,7 @@ public class Node {
 
 	/**
 	 * Retourne le ratio d'une valeur d'un attribut sur les entries du noeud courant
-	 * 
+	 *
 	 * @param attributIndex
 	 * @param valueIndex
 	 * @return
