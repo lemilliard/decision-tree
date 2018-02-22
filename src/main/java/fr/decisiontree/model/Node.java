@@ -76,7 +76,7 @@ public class Node {
 		}
 
 		for (Entry entry : entries) {
-			if (attributIndex + 1 > entry.getValues().size()) {
+			if (!entry.getValues().containsKey(attributIndex)) {
 				return 0d;
 			} else if (entry.getValues().get(attributIndex) == valueIndex) {
 				p[entry.getDecision()]++;
@@ -176,7 +176,7 @@ public class Node {
 
 		// Pour chaque entry
 		for (Entry entry : entries) {
-			if (attributIndex + 1 > entry.getValues().size()) {
+			if (!entry.getValues().containsKey(attributIndex)) {
 				return 0d;
 			} else if (entry.getValues().get(attributIndex) == valueIndex) {
 				count++;

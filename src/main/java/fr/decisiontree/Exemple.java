@@ -2,6 +2,8 @@ package fr.decisiontree;
 
 import fr.decisiontree.model.Result;
 
+import java.util.HashMap;
+
 public class Exemple {
 
 	public static void main(String... args) {
@@ -19,13 +21,21 @@ public class Exemple {
 
 		DecisionTree.print();
 
-		Result decision = DecisionTree.decide("Soleil", "Basse", "Normale", "Fort");
-		System.out.println(decision.getValue());
-		System.out.println(decision.getRatio());
+		HashMap<String, String> values = new HashMap<>();
+		values.put("Ciel", "Soleil");
+		values.put("Humidité", "Normale");
+//		Result decision = DecisionTree.decide(values);
+//		System.out.println(decision.getValue());
+//		System.out.println(decision.getRatio());
 
-		decision = DecisionTree.decide("Couvert", "Basse", "Normale", "Fort");
-		System.out.println(decision.getValue());
-		System.out.println(decision.getRatio());
+		values = new HashMap<>();
+		values.put("Ciel", "Couvert");
+		values.put("Température", "Basse");
+		values.put("Humidité", "Normale");
+		values.put("Vent", "Fort");
+//		decision = DecisionTree.decide(values);
+//		System.out.println(decision.getValue());
+//		System.out.println(decision.getRatio());
 
 		DecisionTree.save();
 	}

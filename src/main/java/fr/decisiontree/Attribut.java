@@ -31,15 +31,15 @@ public class Attribut {
 		return value >= values.length;
 	}
 
-	public Integer getValueByName(String valueName) {
-		Integer value = null;
+	public Integer getIndexOfValue(String valueName) {
+		boolean found = false;
 		int i = 0;
-		while (i < values.length && value == null) {
+		while (i < values.length && !found) {
 			if (values[i].equals(valueName)) {
-				value = i;
+				found = true;
 			}
 			i++;
 		}
-		return value;
+		return i;
 	}
 }
