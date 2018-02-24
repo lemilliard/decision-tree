@@ -11,11 +11,7 @@ Afin de faciliter l'utilisation de la librairie, il est fortement conseillé de 
 sur le repository maven local. Il suffit de faire comme suit:
 
 ```sh
-mvn clean package
-
-cd target
-
-mvn install:install-file -Dfile=decisiontree-1.0-SNAPSHOT.jar -DgroupId=com.lemilliard -DartifactId=decisiontree -Dversion=1.0-SNAPSHOT -Dpackaging=jar
+mvn install
 ```
 
 Ensuite, il faudra l'inclure dans le projet maven avec la dépendance suivante:
