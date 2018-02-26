@@ -6,7 +6,9 @@ import fr.decisiontree.model.Result;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DecisionTree {
@@ -83,8 +85,19 @@ public class DecisionTree {
 		}
 	}
 
-	public static Result decide(HashMap<String, String> params) {
+//	public static Result decide(HashMap<String, String> params) {
+//		Entry entry = entryFromParams(params, null);
+//		return tree.decide(entry);
+//	}
+        
+        public static Result decide(HashMap<String, String> params) {
 		Entry entry = entryFromParams(params, null);
+                List<Integer> listAttributs = new ArrayList<>();
+                for (Map.Entry<String, String> param : params.entrySet()) {
+			listAttributs.add(config.getIndexOfAttribut(param.getKey()));
+                }
+                tree.regenerateTree(listAttributs);
+                tree.print();
 		return tree.decide(entry);
 	}
 

@@ -224,6 +224,24 @@ public class Node {
 
 		return plusPertinent;
 	}
+        
+        public Integer getPlusPertinent(List<Integer> listAttributs) {
+		Double pertinence = 0d;
+		Integer plusPertinent = -1;
+                for(Integer i : listAttributs){
+			Double p = pertinence(i);
+			if (p > pertinence) {
+				pertinence = p;
+				plusPertinent = i;
+			}
+                }
+
+		if (plusPertinent == -1) {
+			return null;
+		}
+
+		return plusPertinent;
+	}
 
 	public int getDecision() {
 		List<Integer> p = new ArrayList<>();
@@ -255,6 +273,11 @@ public class Node {
 		setBranches(new ArrayList<>());
 		generateTree();
 	}
+        
+        public void regenerateTree(List<Integer> listAttributs) {
+		setBranches(new ArrayList<>());
+		generateTree(listAttributs);
+	}
 
 	/**
 	 * Generate tree
@@ -273,6 +296,21 @@ public class Node {
 			setAttributIndex(getDecision());
 		}
 	}
+        
+        public void generateTree(List<Integer> listAttributs) {
+		Integer plusPertinent = getPlusPertinent(listAttributs);
+		if (plusPertinent != null) {
+			setAttributIndex(plusPertinent);
+			for (int valueIndex = 0; valueIndex < config.getAttributByIndex(plusPertinent)
+					.getValues().length; valueIndex++) {
+				Branch branch = addBranch(new Branch(valueIndex));
+				Node child = branch.setChild(new Node(config, valueIndex, plusPertinent, entries));
+				child.generateTree(listAttributs);
+			}
+		} else {
+			setAttributIndex(getDecision());
+		}
+	}
 
 	public Result decide(Entry entry) {
 		if (getBranches().size() == 0) {
@@ -283,7 +321,7 @@ public class Node {
 			}
 		} else {
 			for (Branch branch : getBranches()) {
-				if (entry.getValues().get(attributIndex).equals(branch.getValueIndex())) {
+				if (entry.getValues().containsKey(attributIndex) && entry.getValues().get(attributIndex).equals(branch.getValueIndex())) {
 					return branch.getNode().decide(entry);
 				}
 			}

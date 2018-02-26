@@ -51,8 +51,9 @@ public class Config {
 		while (i < attributs.size() && !found) {
 			if (attributs.get(i).getName().equals(attributName)) {
 				found = true;
-			}
-			i++;
+			} else {
+                            i++;
+                        }
 		}
 		return i;
 	}

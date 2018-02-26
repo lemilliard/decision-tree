@@ -19,23 +19,29 @@ public class Exemple {
 
 		DecisionTree.init(config);
 
-		DecisionTree.print();
+//		DecisionTree.print();
 
 		HashMap<String, String> values = new HashMap<>();
 		values.put("Ciel", "Soleil");
 		values.put("Humidité", "Normale");
-//		Result decision = DecisionTree.decide(values);
-//		System.out.println(decision.getValue());
-//		System.out.println(decision.getRatio());
+                Result decision;
+		decision = DecisionTree.decide(values);
+		System.out.println(decision.getValue());
+		System.out.println(decision.getRatio());
 
 		values = new HashMap<>();
-		values.put("Ciel", "Couvert");
 		values.put("Température", "Basse");
 		values.put("Humidité", "Normale");
 		values.put("Vent", "Fort");
-//		decision = DecisionTree.decide(values);
-//		System.out.println(decision.getValue());
-//		System.out.println(decision.getRatio());
+		decision = DecisionTree.decide(values);
+		System.out.println(decision.getValue());
+		System.out.println(decision.getRatio());
+                
+                values = new HashMap<>();
+		values.put("Température", "Basse");
+		decision = DecisionTree.decide(values);
+		System.out.println(decision.getValue());
+		System.out.println(decision.getRatio());
 
 		DecisionTree.save();
 	}

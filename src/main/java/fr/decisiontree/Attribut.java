@@ -37,8 +37,9 @@ public class Attribut {
 		while (i < values.length && !found) {
 			if (values[i].equals(valueName)) {
 				found = true;
-			}
-			i++;
+			} else {
+                            i++;
+                        }
 		}
 		return i;
 	}
