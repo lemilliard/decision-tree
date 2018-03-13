@@ -28,7 +28,6 @@ public class DecisionTree {
 	private static void initData() {
 		tree = new Node(config);
 		readDataFromFile();
-		tree.generateTree();
 	}
 
 	private static void initDirectory() {
@@ -42,10 +41,6 @@ public class DecisionTree {
 
 	public static void print() {
 		tree.print();
-	}
-
-	public static void regenerateTree() {
-		tree.regenerateTree();
 	}
 
 	public static void save() {
@@ -89,15 +84,14 @@ public class DecisionTree {
 //		Entry entry = entryFromParams(params, null);
 //		return tree.decide(entry);
 //	}
-        
-        public static Result decide(HashMap<String, String> params) {
+
+	public static Result decide(HashMap<String, String> params) {
 		Entry entry = entryFromParams(params, null);
-                List<Integer> listAttributs = new ArrayList<>();
-                for (Map.Entry<String, String> param : params.entrySet()) {
+		List<Integer> listAttributs = new ArrayList<>();
+		for (Map.Entry<String, String> param : params.entrySet()) {
 			listAttributs.add(config.getIndexOfAttribut(param.getKey()));
-                }
-                tree.regenerateTree(listAttributs);
-                tree.print();
+		}
+		tree.regenerateTree(listAttributs);
 		return tree.decide(entry);
 	}
 

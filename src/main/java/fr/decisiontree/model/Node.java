@@ -29,7 +29,7 @@ public class Node {
 	public Node(Config config, Integer valueToKeep, Integer att, List<Entry> entries) {
 		this(config);
 		for (Entry entry : entries) {
-			if (entry.getValues().size() > att && entry.getValues().get(att).equals(valueToKeep)) {
+			if (entry.getValues().containsKey(att) && entry.getValues().get(att).equals(valueToKeep)) {
 				addEntry(entry);
 			}
 		}
@@ -224,17 +224,17 @@ public class Node {
 
 		return plusPertinent;
 	}
-        
-        public Integer getPlusPertinent(List<Integer> listAttributs) {
+
+	public Integer getPlusPertinent(List<Integer> listAttributs) {
 		Double pertinence = 0d;
 		Integer plusPertinent = -1;
-                for(Integer i : listAttributs){
+		for (Integer i : listAttributs) {
 			Double p = pertinence(i);
 			if (p > pertinence) {
 				pertinence = p;
 				plusPertinent = i;
 			}
-                }
+		}
 
 		if (plusPertinent == -1) {
 			return null;
@@ -266,38 +266,12 @@ public class Node {
 		return maxIndex;
 	}
 
-	/**
-	 * Regenerate tree
-	 */
-	public void regenerateTree() {
-		setBranches(new ArrayList<>());
-		generateTree();
-	}
-        
-        public void regenerateTree(List<Integer> listAttributs) {
+	public void regenerateTree(List<Integer> listAttributs) {
 		setBranches(new ArrayList<>());
 		generateTree(listAttributs);
 	}
 
-	/**
-	 * Generate tree
-	 */
-	public void generateTree() {
-		Integer plusPertinent = getPlusPertinent();
-		if (plusPertinent != null) {
-			setAttributIndex(plusPertinent);
-			for (int valueIndex = 0; valueIndex < config.getAttributByIndex(plusPertinent)
-					.getValues().length; valueIndex++) {
-				Branch branch = addBranch(new Branch(valueIndex));
-				Node child = branch.setChild(new Node(config, valueIndex, plusPertinent, entries));
-				child.generateTree();
-			}
-		} else {
-			setAttributIndex(getDecision());
-		}
-	}
-        
-        public void generateTree(List<Integer> listAttributs) {
+	public void generateTree(List<Integer> listAttributs) {
 		Integer plusPertinent = getPlusPertinent(listAttributs);
 		if (plusPertinent != null) {
 			setAttributIndex(plusPertinent);
