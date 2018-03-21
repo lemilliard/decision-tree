@@ -1,5 +1,7 @@
 package fr.decisiontree.model;
 
+import fr.decisiontree.Config;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,13 +19,21 @@ public class Entry {
 		this.decision = decision;
 	}
 
-	public static Entry fromText(String line) {
+	public static Entry fromText(Config config, String line) {
 		HashMap<Integer, Integer> intAtts = new HashMap<>();
 		String[] stringAtts = line.split(",");
+		String stringAtt;
+		String[] keyValue;
+		Integer key;
+		Integer value;
 		for (int i = 0; i < stringAtts.length - 1; i++) {
-			String stringAtt = stringAtts[i];
-			String[] hyujk = stringAtt.split(":");
-			intAtts.put(Integer.valueOf(hyujk[0]), Integer.valueOf(hyujk[1]));
+			stringAtt = stringAtts[i];
+			keyValue = stringAtt.split(":");
+			key = Integer.valueOf(keyValue[0]);
+			value = Integer.valueOf(keyValue[1]);
+			if (config.isKeyValueValid(key, value)) {
+				intAtts.put(Integer.valueOf(keyValue[0]), Integer.valueOf(keyValue[1]));
+			}
 		}
 		Integer decision = Integer.valueOf(stringAtts[stringAtts.length - 1]);
 		return new Entry(intAtts, decision);

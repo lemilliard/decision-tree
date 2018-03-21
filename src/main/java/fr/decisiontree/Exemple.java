@@ -17,15 +17,13 @@ public class Exemple {
 		config.addDecision("Jouer");
 		config.addDecision("Rester");
 
-		DecisionTree.init(config);
-
-//		DecisionTree.print();
+		DecisionTree decisionTree = new DecisionTree(config);
 
 		HashMap<String, String> values = new HashMap<>();
 		values.put("Ciel", "Soleil");
 		values.put("Humidité", "Normale");
-                Result decision;
-		decision = DecisionTree.decide(values);
+		Result decision;
+		decision = decisionTree.decide(values);
 		System.out.println(decision.getValue());
 		System.out.println(decision.getRatio());
 
@@ -33,16 +31,17 @@ public class Exemple {
 		values.put("Température", "Basse");
 		values.put("Humidité", "Normale");
 		values.put("Vent", "Fort");
-		decision = DecisionTree.decide(values);
-		System.out.println(decision.getValue());
-		System.out.println(decision.getRatio());
-                
-                values = new HashMap<>();
-		values.put("Température", "Basse");
-		decision = DecisionTree.decide(values);
+		decision = decisionTree.decide(values);
 		System.out.println(decision.getValue());
 		System.out.println(decision.getRatio());
 
-		DecisionTree.save();
+		values = new HashMap<>();
+		values.put("Température", "Basse");
+		decision = decisionTree.decide(values);
+		System.out.println(decision.getValue());
+		System.out.println(decision.getRatio());
+
+		decisionTree.print();
+		decisionTree.save();
 	}
 }

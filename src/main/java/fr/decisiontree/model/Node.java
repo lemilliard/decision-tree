@@ -244,21 +244,21 @@ public class Node {
 	}
 
 	public int getDecision() {
-		List<Integer> p = new ArrayList<>();
+		List<Integer> pDecisions = new ArrayList<>();
 
 		for (int i = 0; i < config.getDecisions().size(); i++) {
-			p.add(0);
+			pDecisions.add(0);
 		}
 
 		for (Entry entry : entries) {
-			p.set(entry.getDecision(), p.get(entry.getDecision()) + 1);
+			pDecisions.set(entry.getDecision(), pDecisions.get(entry.getDecision()) + 1);
 		}
 
 		int max = 0;
 		int maxIndex = -1;
-		for (int i = 0; i < p.size(); i++) {
-			if (p.get(i) > max) {
-				max = p.get(i);
+		for (int i = 0; i < pDecisions.size(); i++) {
+			if (pDecisions.get(i) > max) {
+				max = pDecisions.get(i);
 				maxIndex = i;
 			}
 		}
@@ -294,9 +294,11 @@ public class Node {
 				return new Result(treeDecision, ratio);
 			}
 		} else {
-			for (Branch branch : getBranches()) {
-				if (entry.getValues().containsKey(attributIndex) && entry.getValues().get(attributIndex).equals(branch.getValueIndex())) {
-					return branch.getNode().decide(entry);
+			if (entry != null) {
+				for (Branch branch : getBranches()) {
+					if (entry.getValues().containsKey(attributIndex) && entry.getValues().get(attributIndex).equals(branch.getValueIndex())) {
+						return branch.getNode().decide(entry);
+					}
 				}
 			}
 		}

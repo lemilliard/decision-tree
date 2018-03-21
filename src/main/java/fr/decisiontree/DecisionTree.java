@@ -6,31 +6,28 @@ import fr.decisiontree.model.Result;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class DecisionTree {
 
 	private static final String dataFileName = "data.txt";
 
-	private static Node tree;
+	private Node tree;
 
-	private static Config config;
+	private Config config;
 
-	public static void init(Config config) {
-		DecisionTree.config = config;
+	public DecisionTree(Config config) {
+		this.config = config;
 		initDirectory();
 		initData();
 	}
 
-	private static void initData() {
+	private void initData() {
 		tree = new Node(config);
 		readDataFromFile();
 	}
 
-	private static void initDirectory() {
+	private void initDirectory() {
 		File dir = new File(config.getDirectory());
 		try {
 			Files.createDirectories(dir.toPath());
@@ -39,32 +36,32 @@ public class DecisionTree {
 		}
 	}
 
-	public static void print() {
+	public void print() {
 		tree.print();
 	}
 
-	public static void save() {
+	public void save() {
 		writeDataToFile();
 	}
 
-	private static String getFilePath(String fileName) {
+	private String getFilePath(String fileName) {
 		return config.getDirectory() + "/" + fileName;
 	}
 
-	public static void readDataFromFile() {
+	public void readDataFromFile() {
 		try {
 			File f = new File(getFilePath(dataFileName));
 			BufferedReader bufferedReader = new BufferedReader(new FileReader(f));
 			String line;
 			while ((line = bufferedReader.readLine()) != null) {
-				tree.getEntries().add(Entry.fromText(line));
+				tree.getEntries().add(Entry.fromText(config, line));
 			}
 		} catch (IOException e) {
 			System.out.println("Aucune données");
 		}
 	}
 
-	public static void writeDataToFile() {
+	public void writeDataToFile() {
 		PrintWriter writer = null;
 		try {
 			writer = new PrintWriter(getFilePath(dataFileName), "UTF-8");
@@ -85,30 +82,48 @@ public class DecisionTree {
 //		return tree.decide(entry);
 //	}
 
-	public static Result decide(HashMap<String, String> params) {
+	public Result decide(HashMap<String, String> params) {
+		Result result = null;
 		Entry entry = entryFromParams(params, null);
 		List<Integer> listAttributs = new ArrayList<>();
 		for (Map.Entry<String, String> param : params.entrySet()) {
 			listAttributs.add(config.getIndexOfAttribut(param.getKey()));
 		}
 		tree.regenerateTree(listAttributs);
-		return tree.decide(entry);
+		if (entry != null) {
+			result = tree.decide(entry);
+		}
+		return result;
 	}
 
-	public static void addData(HashMap<String, String> params, Integer decision) {
+	public void addData(HashMap<String, String> params, Integer decision) {
 		Entry entry = entryFromParams(params, decision);
-		tree.addEntry(entry);
+		if (entry != null) {
+			tree.addEntry(entry);
+		}
 	}
 
-	private static Entry entryFromParams(HashMap<String, String> params, Integer decision) {
+	private Entry entryFromParams(HashMap<String, String> params, Integer decision) {
+		Entry entry = null;
+		boolean valid = true;
 		HashMap<Integer, Integer> values = new HashMap<>();
 		int attributIndex;
 		int valueIndex;
-		for (Map.Entry<String, String> param : params.entrySet()) {
+		Map.Entry<String, String> param;
+		Iterator<Map.Entry<String, String>> iterator = params.entrySet().iterator();
+		while (iterator.hasNext() && valid) {
+			param = iterator.next();
 			attributIndex = config.getIndexOfAttribut(param.getKey());
 			valueIndex = config.getIndexOfValue(attributIndex, param.getValue());
-			values.put(attributIndex, valueIndex);
+			if (attributIndex == -1 || valueIndex == -1) {
+				valid = false;
+			} else {
+				values.put(attributIndex, valueIndex);
+			}
 		}
-		return new Entry(values, decision);
+		if (valid) {
+			entry = new Entry(values, decision);
+		}
+		return entry;
 	}
 }

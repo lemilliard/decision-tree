@@ -27,20 +27,19 @@ public class Attribut {
 		this.values = values;
 	}
 
-	public boolean isPossibleValue(int value) {
-		return value >= values.length;
+	public boolean isPossibleValue(Integer valueIndex) {
+		return valueIndex != null && valueIndex < values.length;
 	}
 
 	public Integer getIndexOfValue(String valueName) {
-		boolean found = false;
+		int index = -1;
 		int i = 0;
-		while (i < values.length && !found) {
+		while (i < values.length && index == -1) {
 			if (values[i].equals(valueName)) {
-				found = true;
-			} else {
-                            i++;
-                        }
+				index = i;
+			}
+			i++;
 		}
-		return i;
+		return index;
 	}
 }

@@ -46,31 +46,38 @@ public class Config {
 	}
 
 	public int getIndexOfAttribut(String attributName) {
-		boolean found = false;
+		int index = -1;
 		int i = 0;
-		while (i < attributs.size() && !found) {
+		while (i < attributs.size() && index == -1) {
 			if (attributs.get(i).getName().equals(attributName)) {
-				found = true;
-			} else {
-                            i++;
-                        }
+				index = i;
+			}
+			i++;
 		}
-		return i;
+		return index;
 	}
 
 	public String getValue(int attributIndex, int valueIndex) {
 		return attributs.get(attributIndex).getValues()[valueIndex];
 	}
 
-	public Integer getDecisionByName(String decisionName) {
-		Integer decision = null;
+	public Integer getIndexOfDecision(String decisionName) {
+		int index = -1;
 		int i = 0;
-		while (i < decisions.size() && decision == null) {
+		while (i < decisions.size() && index == -1) {
 			if (decisions.get(i).equals(decisionName)) {
-				decision = i;
+				index = i;
 			}
 			i++;
 		}
-		return decision;
+		return index;
+	}
+
+	public boolean isPossibleAttribut(Integer attributIndex) {
+		return attributIndex != null && attributIndex < attributs.size();
+	}
+
+	public boolean isKeyValueValid(Integer attributIndex, Integer valueIndex) {
+		return isPossibleAttribut(attributIndex) && attributs.get(attributIndex).isPossibleValue(valueIndex);
 	}
 }
