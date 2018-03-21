@@ -1,37 +1,32 @@
 package fr.decisiontree.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by tkint on 23/11/2017.
  */
 public class Entry {
 
-	private List<Integer> values;
+	private HashMap<Integer, Integer> values;
 
 	private Integer decision;
 
-	public Entry(Integer... values) {
-		this.values = new ArrayList<>();
-		for (int i = 0; i < values.length - 1; i++) {
-			this.values.add(values[i]);
-		}
-		decision = values[values.length - 1];
-	}
-
-	public Entry(int decision, List<Integer> values) {
-		this.decision = decision;
+	public Entry(HashMap<Integer, Integer> values, Integer decision) {
 		this.values = values;
+		this.decision = decision;
 	}
 
 	public static Entry fromText(String line) {
-		List<Integer> intAtts = new ArrayList<>();
+		HashMap<Integer, Integer> intAtts = new HashMap<>();
 		String[] stringAtts = line.split(",");
-		for (String stringAtt : stringAtts) {
-			intAtts.add(Integer.valueOf(stringAtt));
+		for (int i = 0; i < stringAtts.length - 1; i++) {
+			String stringAtt = stringAtts[i];
+			String[] hyujk = stringAtt.split(":");
+			intAtts.put(Integer.valueOf(hyujk[0]), Integer.valueOf(hyujk[1]));
 		}
-		return new Entry(intAtts.toArray(new Integer[stringAtts.length]));
+		Integer decision = Integer.valueOf(stringAtts[stringAtts.length - 1]);
+		return new Entry(intAtts, decision);
 	}
 
 	public Integer getDecision() {
@@ -42,18 +37,18 @@ public class Entry {
 		this.decision = decision;
 	}
 
-	public List<Integer> getValues() {
+	public HashMap<Integer, Integer> getValues() {
 		return values;
 	}
 
-	public void setValues(List<Integer> values) {
+	public void setValues(HashMap<Integer, Integer> values) {
 		this.values = values;
 	}
 
 	public String toText() {
 		StringBuilder str = new StringBuilder();
-		for (int i = 0; i < values.size(); i++) {
-			str.append(values.get(i)).append(",");
+		for (Map.Entry<Integer, Integer> value : values.entrySet()) {
+			str.append(value.getKey()).append(":").append(value.getValue()).append(",");
 		}
 		str.append(decision);
 		return str.toString();

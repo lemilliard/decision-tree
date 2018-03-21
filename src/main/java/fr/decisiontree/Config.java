@@ -42,7 +42,20 @@ public class Config {
 	}
 
 	public int getIndexOfValue(int attributIndex, String valueName) {
-		return attributs.get(attributIndex).getValueByName(valueName);
+		return attributs.get(attributIndex).getIndexOfValue(valueName);
+	}
+
+	public int getIndexOfAttribut(String attributName) {
+		boolean found = false;
+		int i = 0;
+		while (i < attributs.size() && !found) {
+			if (attributs.get(i).getName().equals(attributName)) {
+				found = true;
+			} else {
+                            i++;
+                        }
+		}
+		return i;
 	}
 
 	public String getValue(int attributIndex, int valueIndex) {

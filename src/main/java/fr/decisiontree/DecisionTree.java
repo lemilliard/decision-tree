@@ -1,17 +1,15 @@
 package fr.decisiontree;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.nio.file.Files;
-
 import fr.decisiontree.model.Entry;
 import fr.decisiontree.model.Node;
 import fr.decisiontree.model.Result;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class DecisionTree {
 
@@ -30,7 +28,6 @@ public class DecisionTree {
 	private static void initData() {
 		tree = new Node(config);
 		readDataFromFile();
-		tree.generateTree();
 	}
 
 	private static void initDirectory() {
@@ -44,10 +41,6 @@ public class DecisionTree {
 
 	public static void print() {
 		tree.print();
-	}
-
-	public static void regenerateTree() {
-		tree.regenerateTree();
 	}
 
 	public static void save() {
@@ -87,34 +80,35 @@ public class DecisionTree {
 		}
 	}
 
-	public static Result decide(String... params) {
-		Entry entry = entryFromParams(params);
+//	public static Result decide(HashMap<String, String> params) {
+//		Entry entry = entryFromParams(params, null);
+//		return tree.decide(entry);
+//	}
+
+	public static Result decide(HashMap<String, String> params) {
+		Entry entry = entryFromParams(params, null);
+		List<Integer> listAttributs = new ArrayList<>();
+		for (Map.Entry<String, String> param : params.entrySet()) {
+			listAttributs.add(config.getIndexOfAttribut(param.getKey()));
+		}
+		tree.regenerateTree(listAttributs);
 		return tree.decide(entry);
 	}
 
-	public static void addData(String... params) {
-		if (params.length == config.getAttributs().size() + 1) {
-			Entry entry = entryFromParams(params);
-			tree.addEntry(entry);
-		}
+	public static void addData(HashMap<String, String> params, Integer decision) {
+		Entry entry = entryFromParams(params, decision);
+		tree.addEntry(entry);
 	}
 
-	private static Entry entryFromParams(String... params) {
-		Integer[] values;
-		if (params.length == config.getAttributs().size()) {
-			values = new Integer[params.length + 1];
-		} else {
-			values = new Integer[params.length];
+	private static Entry entryFromParams(HashMap<String, String> params, Integer decision) {
+		HashMap<Integer, Integer> values = new HashMap<>();
+		int attributIndex;
+		int valueIndex;
+		for (Map.Entry<String, String> param : params.entrySet()) {
+			attributIndex = config.getIndexOfAttribut(param.getKey());
+			valueIndex = config.getIndexOfValue(attributIndex, param.getValue());
+			values.put(attributIndex, valueIndex);
 		}
-		for (int i = 0; i < params.length; i++) {
-			if (params[i] != null) {
-				if (params.length > config.getAttributs().size() && i == params.length - 1) {
-					values[i] = config.getDecisionByName(params[i]);
-				} else {
-					values[i] = config.getIndexOfValue(i, params[i]);
-				}
-			}
-		}
-		return new Entry(values);
+		return new Entry(values, decision);
 	}
 }
