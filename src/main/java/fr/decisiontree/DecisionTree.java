@@ -22,6 +22,18 @@ public class DecisionTree {
 		initData();
 	}
 
+	public Node getTree() {
+		return tree;
+	}
+
+	public Config getConfig() {
+		return config;
+	}
+
+	public static String getDataFileName() {
+		return dataFileName;
+	}
+
 	private void initData() {
 		tree = new Node(config);
 		readDataFromFile();
@@ -76,11 +88,6 @@ public class DecisionTree {
 			}
 		}
 	}
-
-//	public static Result decide(HashMap<String, String> params) {
-//		Entry entry = entryFromParams(params, null);
-//		return tree.decide(entry);
-//	}
 
 	public Result decide(HashMap<String, String> params) {
 		Result result = null;
