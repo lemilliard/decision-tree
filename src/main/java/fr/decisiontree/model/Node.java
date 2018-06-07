@@ -4,6 +4,8 @@ import fr.decisiontree.Config;
 import fr.decisiontree.utils.ConsoleColors;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -65,7 +67,32 @@ public class Node {
 	}
 
 	public Entry addEntry(Entry entry) {
-		entries.add(entry);
+		if (entries.contains(entry)) {
+			entry.addOccurence();
+		} else {
+			entries.add(entry);
+		}
+		return entry;
+	}
+
+	private int entriesCount() {
+		int count = 0;
+		for (Entry entry : entries) {
+			count += entry.getCount();
+		}
+		return count;
+	}
+
+	public Entry getEntryByValuesAndDecision(HashMap<Integer, Integer> values, Integer decision) {
+		Entry entry = null;
+		for (Entry e : entries) {
+			if (e.getValues().equals(values) && e.getDecision().equals(decision)) {
+				entry = e;
+			}
+		}
+		if (entry == null) {
+			return new Entry(values, decision, 1);
+		}
 		return entry;
 	}
 
@@ -79,7 +106,7 @@ public class Node {
 			if (!entry.getValues().containsKey(attributIndex)) {
 				return 0d;
 			} else if (entry.getValues().get(attributIndex) == valueIndex) {
-				p[entry.getDecision()]++;
+				p[entry.getDecision()] += entry.getCount();
 			}
 		}
 
@@ -90,7 +117,7 @@ public class Node {
 		}
 
 		for (int i = 0; i < p.length; i++) {
-			p[i] /= entries.size();
+			p[i] /= entriesCount();
 		}
 
 		double entropie = 0;
@@ -119,7 +146,7 @@ public class Node {
 		}
 
 		for (int i = 0; i < p.length; i++) {
-			p[i] /= entries.size();
+			p[i] /= entriesCount();
 		}
 
 		double entropie = 0;
@@ -179,15 +206,15 @@ public class Node {
 			if (!entry.getValues().containsKey(attributIndex)) {
 				return 0d;
 			} else if (entry.getValues().get(attributIndex) == valueIndex) {
-				count++;
+				count += entry.getCount();
 			}
 		}
 
-		if (entries.size() == 0) {
+		if (entriesCount() == 0) {
 			return 0d;
 		}
 
-		return count / entries.size();
+		return count / entriesCount();
 	}
 
 	public double getResultatRatio(int attributIndex) {
@@ -196,15 +223,15 @@ public class Node {
 		// Pour chaque entry
 		for (Entry entry : entries) {
 			if (entry.getDecision().equals(attributIndex)) {
-				count++;
+				count += entry.getCount();
 			}
 		}
 
-		if (entries.size() == 0) {
+		if (entriesCount() == 0) {
 			return 0d;
 		}
 
-		return count / entries.size();
+		return count / entriesCount();
 	}
 
 	public Integer getPlusPertinent() {
@@ -226,10 +253,11 @@ public class Node {
 	}
 
 	public Integer getPlusPertinent(List<Integer> listAttributs) {
+		Double p;
 		Double pertinence = 0d;
 		Integer plusPertinent = -1;
 		for (Integer i : listAttributs) {
-			Double p = pertinence(i);
+			 p = pertinence(i);
 			if (p > pertinence) {
 				pertinence = p;
 				plusPertinent = i;
@@ -279,6 +307,7 @@ public class Node {
 					.getValues().length; valueIndex++) {
 				Branch branch = addBranch(new Branch(valueIndex));
 				Node child = branch.setChild(new Node(config, valueIndex, plusPertinent, entries));
+				listAttributs.remove(plusPertinent);
 				child.generateTree(listAttributs);
 			}
 		} else {

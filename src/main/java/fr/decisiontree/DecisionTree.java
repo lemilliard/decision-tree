@@ -129,7 +129,7 @@ public class DecisionTree {
 			}
 		}
 		if (valid) {
-			entry = new Entry(values, decision);
+			entry = new Entry(values, decision, 1);
 		}
 		return entry;
 	}
