@@ -22,6 +22,13 @@ public class Entry {
 		this.count = count;
 	}
 
+	/**
+	 * Créé une entry depuis du texte
+	 *
+	 * @param config
+	 * @param line
+	 * @return
+	 */
 	public static Entry fromText(Config config, String line) {
 		HashMap<Integer, Integer> intAtts = new HashMap<>();
 		String[] stringAtts = line.split(",");

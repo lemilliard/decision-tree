@@ -61,7 +61,6 @@ public class Exemple {
 		config.addDecision("No");
 
 		DecisionTree decisionTree = new DecisionTree(config);
-		decisionTree.readDataFromFile();
 
 		decisionTree.getTree().generateTree(config.getAttributIndexes());
 

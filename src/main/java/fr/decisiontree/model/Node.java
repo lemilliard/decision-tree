@@ -307,7 +307,7 @@ public class Node {
 					.getValues().length; valueIndex++) {
 				Branch branch = addBranch(new Branch(valueIndex));
 				Node child = branch.setChild(new Node(config, valueIndex, plusPertinent, entries));
-				listAttributs.remove(plusPertinent);
+//				listAttributs.remove(plusPertinent);
 				child.generateTree(listAttributs);
 			}
 		} else {

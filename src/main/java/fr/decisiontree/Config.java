@@ -53,6 +53,12 @@ public class Config {
 		return indexes;
 	}
 
+	/**
+	 * Retourne l'index de l'attribut basé sur son nom
+	 *
+	 * @param attributName
+	 * @return
+	 */
 	public int getIndexOfAttribut(String attributName) {
 		int index = -1;
 		int i = 0;
