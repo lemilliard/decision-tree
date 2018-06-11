@@ -7,7 +7,7 @@ import java.util.HashMap;
 public class Exemple {
 
 	public static void main(String... args) {
-		exemple1();
+//		exemple1();
 		exemple2();
 	}
 
