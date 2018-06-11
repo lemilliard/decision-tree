@@ -52,18 +52,34 @@ public class Exemple {
 	private static void exemple2() {
 		Config config = new Config("./exemple2");
 
-		config.addAttribut("Outlook", "Rainy", "Overcast", "Sunny");
-		config.addAttribut("Temperature", "Hot", "Mild", "Cool");
-		config.addAttribut("Humidity", "High", "Normal");
-		config.addAttribut("Windy", "False", "True");
+//		config.addAttribut("Outlook", "Rainy", "Overcast", "Sunny");
+//		config.addAttribut("Temperature", "Hot", "Mild", "Cool");
+//		config.addAttribut("Humidity", "High", "Normal");
+//		config.addAttribut("Windy", "False", "True");
+//
+//		config.addDecision("Yes");
+//		config.addDecision("No");
 
-		config.addDecision("Yes");
-		config.addDecision("No");
+                config.addAttribut("Couleur", "normale", "colorimétré");
+		config.addAttribut("Noyaux", "0", "1", "2");
+		config.addAttribut("Flagelles", "0", "1", "2");
+
+		config.addDecision("fine");
+		config.addDecision("epaisse");
 
 		DecisionTree decisionTree = new DecisionTree(config);
 
 		decisionTree.getTree().generateTree(config.getAttributIndexes());
 
 		decisionTree.print();
+                
+                HashMap<String, String> values = new HashMap<>();
+		values.put("Couleur", "normale");
+		values.put("Noyaux", "1");
+		values.put("Flagelles", "1");
+		Result decision;
+		decision = decisionTree.decide(values);
+		System.out.println(decision.getValue());
+		System.out.println(decision.getRatio());
 	}
 }

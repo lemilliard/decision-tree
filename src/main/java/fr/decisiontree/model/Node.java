@@ -111,7 +111,7 @@ public class Node {
 		}
 
 		for (int i = 0; i < p.length; i++) {
-			if (p[i] == 0) {
+			if (p[i] == 0d) {
 				return 0d;
 			}
 		}
@@ -307,7 +307,7 @@ public class Node {
 					.getValues().length; valueIndex++) {
 				Branch branch = addBranch(new Branch(valueIndex));
 				Node child = branch.setChild(new Node(config, valueIndex, plusPertinent, entries));
-//				listAttributs.remove(plusPertinent);
+				listAttributs.remove(plusPertinent);
 				child.generateTree(listAttributs);
 			}
 		} else {
