@@ -1,6 +1,7 @@
 package fr.decisiontree.model;
 
 import fr.decisiontree.Config;
+import java.math.BigInteger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,9 +15,9 @@ public class Entry {
 
 	private Integer decision;
 
-	private Integer count;
+	private Long count;
 
-	public Entry(HashMap<Integer, Integer> values, Integer decision, Integer count) {
+	public Entry(HashMap<Integer, Integer> values, Integer decision, Long count) {
 		this.values = values;
 		this.decision = decision;
 		this.count = count;
@@ -46,7 +47,7 @@ public class Entry {
 			}
 		}
 		Integer decision = Integer.valueOf(stringAtts[stringAtts.length - 2]);
-		Integer count = Integer.valueOf(stringAtts[stringAtts.length - 1]);
+		Long count = Long.valueOf(stringAtts[stringAtts.length - 1]);
 		return new Entry(intAtts, decision, count);
 	}
 
@@ -66,11 +67,11 @@ public class Entry {
 		this.values = values;
 	}
 
-	public Integer getCount() {
+	public Long getCount() {
 		return count;
 	}
 
-	public void setCount(Integer count) {
+	public void setCount(Long count) {
 		this.count = count;
 	}
 

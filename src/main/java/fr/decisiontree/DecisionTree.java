@@ -158,7 +158,7 @@ public class DecisionTree {
 		}
 		// Si l'entry est valide
 		if (valid) {
-			entry = new Entry(values, decision, 1);
+			entry = new Entry(values, decision, 1l);
 		}
 		return entry;
 	}

@@ -91,7 +91,7 @@ public class Node {
 			}
 		}
 		if (entry == null) {
-			return new Entry(values, decision, 1);
+			return new Entry(values, decision, 1l);
 		}
 		return entry;
 	}
