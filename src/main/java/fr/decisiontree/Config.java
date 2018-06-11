@@ -45,6 +45,20 @@ public class Config {
 		return attributs.get(attributIndex).getIndexOfValue(valueName);
 	}
 
+	public List<Integer> getAttributIndexes() {
+		List<Integer> indexes = new ArrayList<>();
+		for (int i = 0; i < attributs.size(); i++) {
+			indexes.add(i);
+		}
+		return indexes;
+	}
+
+	/**
+	 * Retourne l'index de l'attribut basé sur son nom
+	 *
+	 * @param attributName
+	 * @return
+	 */
 	public int getIndexOfAttribut(String attributName) {
 		int index = -1;
 		int i = 0;

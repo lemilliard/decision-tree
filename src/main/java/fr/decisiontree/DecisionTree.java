@@ -39,6 +39,9 @@ public class DecisionTree {
 		readDataFromFile();
 	}
 
+	/**
+	 * Créé le dossier si besoin
+	 */
 	private void initDirectory() {
 		File dir = new File(config.getDirectory());
 		try {
@@ -60,12 +63,17 @@ public class DecisionTree {
 		return config.getDirectory() + "/" + fileName;
 	}
 
+	/**
+	 * Récupère les données depuis le fichier
+	 */
 	public void readDataFromFile() {
 		try {
 			File f = new File(getFilePath(dataFileName));
 			BufferedReader bufferedReader = new BufferedReader(new FileReader(f));
 			String line;
+			// Pour chaque ligne
 			while ((line = bufferedReader.readLine()) != null) {
+				// On ajoute à l'arbre l'entry de la ligne courante
 				tree.getEntries().add(Entry.fromText(config, line));
 			}
 		} catch (IOException e) {
@@ -73,6 +81,9 @@ public class DecisionTree {
 		}
 	}
 
+	/**
+	 * Sauvegarde les données dans le fichier
+	 */
 	public void writeDataToFile() {
 		PrintWriter writer = null;
 		try {
@@ -89,6 +100,12 @@ public class DecisionTree {
 		}
 	}
 
+	/**
+	 * Decide sur une partie des attributs
+	 *
+	 * @param params
+	 * @return
+	 */
 	public Result decide(HashMap<String, String> params) {
 		Result result = null;
 		Entry entry = entryFromParams(params, null);
@@ -110,26 +127,38 @@ public class DecisionTree {
 		}
 	}
 
+	/**
+	 * Récupére une entry correspondant aux paramètres donnés
+	 * @param params
+	 * @param decision
+	 * @return
+	 */
 	private Entry entryFromParams(HashMap<String, String> params, Integer decision) {
 		Entry entry = null;
 		boolean valid = true;
-		HashMap<Integer, Integer> values = new HashMap<>();
 		int attributIndex;
 		int valueIndex;
 		Map.Entry<String, String> param;
 		Iterator<Map.Entry<String, String>> iterator = params.entrySet().iterator();
+		HashMap<Integer, Integer> values = new HashMap<>();
+		// Pour chaque paramètre
 		while (iterator.hasNext() && valid) {
 			param = iterator.next();
+			// On récupère l'index de l'attribut correspondant
 			attributIndex = config.getIndexOfAttribut(param.getKey());
+			// On récupère l'index de la valeur correspondante
 			valueIndex = config.getIndexOfValue(attributIndex, param.getValue());
+			// Si l'attribut ou la valeur n'est pas trouvé, le paramètre n'est pas valide
 			if (attributIndex == -1 || valueIndex == -1) {
 				valid = false;
 			} else {
+				// Sinon, on ajout le paramètre aux valeurs
 				values.put(attributIndex, valueIndex);
 			}
 		}
+		// Si l'entry est valide
 		if (valid) {
-			entry = new Entry(values, decision);
+			entry = new Entry(values, decision, 1l);
 		}
 		return entry;
 	}
