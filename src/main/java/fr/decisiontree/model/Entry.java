@@ -88,4 +88,18 @@ public class Entry {
 	public void addOccurence() {
 		count++;
 	}
+        
+        
+        public boolean isEquals(Entry obj) {
+            boolean equal = true;
+            if(!decision.equals(obj.getDecision())){
+                equal = false;
+            }
+            if(!values.equals(obj.values)){
+                equal = false;
+            }
+            return equal;
+        }
+        
+        
 }

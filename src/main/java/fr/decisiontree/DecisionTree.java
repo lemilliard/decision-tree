@@ -36,6 +36,7 @@ public class DecisionTree {
 
 	private void initData() {
 		tree = new Node(config);
+//		creataFileDataManouche();
 		readDataFromFile();
 	}
 
@@ -57,6 +58,10 @@ public class DecisionTree {
 
 	public void save() {
 		writeDataToFile();
+	}
+        
+        public void save(Entry decision) {
+		writeDataToFile(decision);
 	}
 
 	private String getFilePath(String fileName) {
@@ -80,6 +85,40 @@ public class DecisionTree {
 			System.out.println("Aucune données");
 		}
 	}
+        
+        public void creataFileDataManouche() {
+            PrintWriter writer = null;
+		try {
+			File f = new File(getFilePath(dataFileName));
+			BufferedReader bufferedReader = new BufferedReader(new FileReader(f));
+			String line;
+                        
+			writer = new PrintWriter(getFilePath("dataMesCouilles.txt"), "UTF-8");
+			
+			// Pour chaque ligne
+			while ((line = bufferedReader.readLine()) != null) {
+                            String[] params = line.split(",");
+                            String s = "";
+                            for(int i = 0; i < params.length; i++){
+                                if( i < params.length - 2){
+                                    s += String.valueOf(i) + ":" + params[i] + ",";
+                                } else {
+                                    s += params[i];
+                                    if (i == params.length - 2){
+                                        s += ",";
+                                    }
+                                }
+                            }
+                            writer.println(s);
+			}
+		} catch (IOException e) {
+			System.out.println("Aucune données");
+		}finally {
+			if (writer != null) {
+				writer.close();
+			}
+		}
+	}
 
 	/**
 	 * Sauvegarde les données dans le fichier
@@ -89,8 +128,33 @@ public class DecisionTree {
 		try {
 			writer = new PrintWriter(getFilePath(dataFileName), "UTF-8");
 			for (Entry entry : tree.getEntries()) {
+//                                writer.append(entry.toText() + "\r\n");
 				writer.println(entry.toText());
 			}
+		} catch (FileNotFoundException | UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} finally {
+			if (writer != null) {
+				writer.close();
+			}
+		}
+	}
+        
+        public void writeDataToFile(Entry decision) {
+		PrintWriter writer = null;
+                boolean exist = false;
+		try {
+			writer = new PrintWriter(getFilePath(dataFileName), "UTF-8");
+			for (Entry entry : tree.getEntries()) {
+                            if(entry.isEquals(decision)){
+                                exist = true;
+                                entry.addOccurence();
+                            }
+                            writer.println(entry.toText());
+			}
+                        if(exist == false){
+                            writer.printf(decision.toText());
+                        }
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} finally {
@@ -133,7 +197,7 @@ public class DecisionTree {
 	 * @param decision
 	 * @return
 	 */
-	private Entry entryFromParams(HashMap<String, String> params, Integer decision) {
+	public Entry entryFromParams(HashMap<String, String> params, Integer decision) {
 		Entry entry = null;
 		boolean valid = true;
 		int attributIndex;

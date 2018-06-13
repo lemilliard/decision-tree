@@ -1,5 +1,6 @@
 package fr.decisiontree;
 
+import fr.decisiontree.model.Entry;
 import fr.decisiontree.model.Result;
 
 import java.util.HashMap;
@@ -8,7 +9,8 @@ public class Exemple {
 
 	public static void main(String... args) {
 //		exemple1();
-		exemple2();
+//		exemple2();
+                exempleBanque();
 	}
 
 	private static void exemple1() {
@@ -24,30 +26,31 @@ public class Exemple {
 
 		DecisionTree decisionTree = new DecisionTree(config);
                 decisionTree.getTree().generateTree(config.getAttributIndexes());
-//		HashMap<String, String> values = new HashMap<>();
-//		values.put("Ciel", "Soleil");
-//		values.put("Humidité", "Normale");
-//		Result decision;
-//		decision = decisionTree.decide(values);
-//		System.out.println(decision.getValue());
-//		System.out.println(decision.getRatio());
+		HashMap<String, String> values = new HashMap<>();
+		values.put("Ciel", "Soleil");
+		values.put("Humidité", "Normale");
+		Result decision;
+		decision = decisionTree.decide(values);
+		System.out.println(decision.getValue());
+		System.out.println(decision.getRatio());
+
+		values = new HashMap<>();
+		values.put("Température", "Basse");
+		values.put("Humidité", "Normale");
+		values.put("Vent", "Fort");
+		decision = decisionTree.decide(values);
+		System.out.println(decision.getValue());
+		System.out.println(decision.getRatio());
 //
-//		values = new HashMap<>();
-//		values.put("Température", "Basse");
-//		values.put("Humidité", "Normale");
-//		values.put("Vent", "Fort");
-//		decision = decisionTree.decide(values);
-//		System.out.println(decision.getValue());
-//		System.out.println(decision.getRatio());
-//
-//		values = new HashMap<>();
-//		values.put("Température", "Basse");
-//		decision = decisionTree.decide(values);
-//		System.out.println(decision.getValue());
-//		System.out.println(decision.getRatio());
+		values = new HashMap<>();
+		values.put("Température", "Basse");
+		decision = decisionTree.decide(values);
+		System.out.println(decision.getValue());
+		System.out.println(decision.getRatio());
+                Entry entry = decisionTree.entryFromParams(values, config.getIndexOfDecision(decision.getValue()));
 
 		decisionTree.print();
-		decisionTree.save();
+		decisionTree.save(entry);
 	}
 
 	private static void exemple2() {
@@ -82,5 +85,26 @@ public class Exemple {
 //		decision = decisionTree.decide(values);
 //		System.out.println(decision.getValue());
 //		System.out.println(decision.getRatio());
+	}
+        
+        private static void exempleBanque() {
+		Config config = new Config("./exemple3");
+
+		config.addAttribut("Age", "18-30", "30-50", "50+");
+		config.addAttribut("Salaire", "1000-1500", "1500-2500", "2500-5000", "5000+");
+		config.addAttribut("MontantCompte", "0", "500", "1500", "5000+");
+		config.addAttribut("Credit", "Oui", "Non");
+		config.addAttribut("NbEnfant", "0", "1", "2", "3", "3+");
+
+		config.addDecision("ContratA");
+		config.addDecision("ContratB");
+		config.addDecision("ContratC");
+		config.addDecision("ContratD");
+
+		DecisionTree decisionTree = new DecisionTree(config);
+
+		decisionTree.getTree().generateTree(config.getAttributIndexes());
+
+		decisionTree.print();
 	}
 }

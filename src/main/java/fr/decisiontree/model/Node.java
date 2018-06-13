@@ -75,8 +75,8 @@ public class Node {
 		return entry;
 	}
 
-	private int entriesCount() {
-		int count = 0;
+	private long entriesCount() {
+		long count = 0;
 		for (Entry entry : entries) {
 			count += entry.getCount();
 		}
@@ -136,7 +136,7 @@ public class Node {
 		}
 
 		for (Entry entry : entries) {
-			p[entry.getDecision()]++;
+			p[entry.getDecision()]+= entry.getCount();
 		}
 
 		for (int i = 0; i < p.length; i++) {
@@ -307,7 +307,7 @@ public class Node {
 					.getValues().length; valueIndex++) {
 				Branch branch = addBranch(new Branch(valueIndex));
 				Node child = branch.setChild(new Node(config, valueIndex, plusPertinent, entries));
-				listAttributs.remove(plusPertinent);
+//				listAttributs.remove(plusPertinent);
 				child.generateTree(listAttributs);
 			}
 		} else {
