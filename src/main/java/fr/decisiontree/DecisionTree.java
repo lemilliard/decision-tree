@@ -21,6 +21,12 @@ public class DecisionTree {
 		initDirectory();
 		initData();
 	}
+        
+        public DecisionTree(Config config, List<List<String>> params) {
+		this.config = config;
+		initDirectory();
+		initData(params);
+	}
 
 	public Node getTree() {
 		return tree;
@@ -226,4 +232,19 @@ public class DecisionTree {
 		}
 		return entry;
 	}
+        
+        private void initData(List<List<String>> params) {
+		tree = new Node(config);
+                initDataFromList(params);
+	}
+        
+        public void initDataFromList(List<List<String>> params){
+            for(List<String> param : params){
+                HashMap<Integer, Integer> values = new HashMap<>();
+                for (int i = 0; i < param.size() - 1; i++){
+                    values.put(i, config.getIndexOfValue(i, param.get(i)));
+                }
+                tree.getEntries().add(new Entry(values, config.getIndexOfDecision(param.get(param.size() - 1)), 1l));
+            }
+        }
 }

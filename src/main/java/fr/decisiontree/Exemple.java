@@ -2,15 +2,21 @@ package fr.decisiontree;
 
 import fr.decisiontree.model.Entry;
 import fr.decisiontree.model.Result;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class Exemple {
 
 	public static void main(String... args) {
 //		exemple1();
-//		exemple2();
-                exempleBanque();
+		exemple2();
+//                exempleBanque();
 	}
 
 	private static void exemple1() {
@@ -63,15 +69,37 @@ public class Exemple {
 
 		config.addDecision("Yes");
 		config.addDecision("No");
-
+                
 //                config.addAttribut("Couleur", "normale", "colorimétré");
 //		config.addAttribut("Noyaux", "0", "1", "2");
 //		config.addAttribut("Flagelles", "0", "1", "2");
 //
 //		config.addDecision("fine");
 //		config.addDecision("epaisse");
+                
+                List<List<String>> params = new ArrayList<>();
 
-		DecisionTree decisionTree = new DecisionTree(config);
+                try {
+			File f = new File(config.getDirectory() + "/" + "data.txt");
+			BufferedReader bufferedReader = new BufferedReader(new FileReader(f));
+			String line;
+			// Pour chaque ligne
+			while ((line = bufferedReader.readLine()) != null) {
+                                List<String> s = new ArrayList<>();
+				// On ajoute à l'arbre l'entry de la ligne courante
+				String[] lineParams = line.split(",");
+                                for(int i = 0; i < lineParams.length - 2; i++){
+                                    String test = config.getValue(i, Integer.valueOf(lineParams[i].split(":")[1]));
+                                    s.add(test);
+                                }
+                                s.add(config.getDecisions().get(Integer.valueOf(lineParams[lineParams.length - 2])));
+                                params.add(s);
+			}
+		} catch (IOException e) {
+			System.out.println("Aucune données");
+		}
+
+		DecisionTree decisionTree = new DecisionTree(config, params);
 
 		decisionTree.getTree().generateTree(config.getAttributIndexes());
 
