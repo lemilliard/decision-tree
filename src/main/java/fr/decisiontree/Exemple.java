@@ -100,11 +100,11 @@ public class Exemple {
 			System.out.println("Aucune données");
 		}
 
-		DecisionTree decisionTree = new DecisionTree(config, params);
+//		DecisionTree decisionTree = new DecisionTree(config, params);
 
-		decisionTree.getTree().generateTree(config.getAttributIndexes());
+//		decisionTree.getTree().generateTree(config.getAttributIndexes());
 
-		decisionTree.print();
+//		decisionTree.print();
                 
 //                HashMap<String, String> values = new HashMap<>();
 //		values.put("Couleur", "normale");

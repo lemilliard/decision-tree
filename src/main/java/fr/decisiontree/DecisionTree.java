@@ -1,5 +1,6 @@
 package fr.decisiontree;
 
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import fr.decisiontree.model.Entry;
 import fr.decisiontree.model.Node;
 import fr.decisiontree.model.Result;
@@ -22,10 +23,16 @@ public class DecisionTree {
 		initData();
 	}
         
-        public DecisionTree(Config config, List<List<String>> params) {
+        public DecisionTree(Config config, Set<String> params) {
 		this.config = config;
 		initDirectory();
 		initData(params);
+	}
+        
+        public DecisionTree(Config config, List<List<String>> params) {
+		this.config = config;
+		initDirectory();
+		initDataFromList(params);
 	}
 
 	public Node getTree() {
@@ -86,6 +93,40 @@ public class DecisionTree {
 			while ((line = bufferedReader.readLine()) != null) {
 				// On ajoute à l'arbre l'entry de la ligne courante
 				tree.getEntries().add(Entry.fromText(config, line));
+			}
+		} catch (IOException e) {
+			System.out.println("Aucune données");
+		}
+	}
+        
+        public void readDataFromFile(Set<String> params) {
+		try {
+			File f = new File(getFilePath(dataFileName));
+			BufferedReader bufferedReader = new BufferedReader(new FileReader(f));
+			String line;
+                        Entry entry = null;
+                        boolean ajout = true;
+                        List<Integer> listParamEntry = new ArrayList<>();
+			// Pour chaque ligne
+			while ((line = bufferedReader.readLine()) != null) {
+                            ajout = true;
+                            entry = Entry.fromText(config, line);
+                            for(Map.Entry<Integer, Integer> param : entry.getValues().entrySet()) {
+                                listParamEntry.add(param.getKey());
+                                if(!params.contains(config.getAttributByIndex(param.getKey()).getName())){
+                                    ajout = false;
+                                }
+                            }
+                            for(String s : params){
+                                if(!listParamEntry.contains(config.getIndexOfAttribut(s))){
+                                    ajout = false;
+                                }
+                            }
+                            
+                            if(ajout){
+				// On ajoute à l'arbre l'entry de la ligne courante
+				tree.getEntries().add(Entry.fromText(config, line));
+                            }
 			}
 		} catch (IOException e) {
 			System.out.println("Aucune données");
@@ -233,12 +274,13 @@ public class DecisionTree {
 		return entry;
 	}
         
-        private void initData(List<List<String>> params) {
+        private void initData(Set<String> params) {
 		tree = new Node(config);
-                initDataFromList(params);
+		readDataFromFile(params);
 	}
         
         public void initDataFromList(List<List<String>> params){
+            tree = new Node(config);
             for(List<String> param : params){
                 HashMap<Integer, Integer> values = new HashMap<>();
                 for (int i = 0; i < param.size() - 1; i++){
