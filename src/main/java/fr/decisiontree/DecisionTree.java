@@ -247,4 +247,16 @@ public class DecisionTree {
                 tree.getEntries().add(new Entry(values, config.getIndexOfDecision(param.get(param.size() - 1)), 1l));
             }
         }
+        
+        public void initFirstData(){
+            for(int i = 0; i < config.getAttributs().size(); i++){
+                for(int j = 0; j < config.getAttributs().get(i).getValues().length; j++){
+                    HashMap<Integer, Integer> values = new HashMap<>();
+                    values.put(i, j);
+                    for(int k = 0; k < config.getDecisions().size(); k++){
+                        tree.getEntries().add(new Entry(values, k, 1l));
+                    }
+                }
+            }
+        }
 }

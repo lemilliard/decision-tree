@@ -15,8 +15,9 @@ public class Exemple {
 
 	public static void main(String... args) {
 //		exemple1();
-		exemple2();
+//		exemple2();
 //                exempleBanque();
+                exempleChatBot();
 	}
 
 	private static void exemple1() {
@@ -134,5 +135,29 @@ public class Exemple {
 		decisionTree.getTree().generateTree(config.getAttributIndexes());
 
 		decisionTree.print();
+	}
+        
+        private static void exempleChatBot() {
+		Config config = new Config("./exempleChat");
+
+		config.addAttribut("Action", "acceder", "recherche", "effectuer");
+		config.addAttribut("Cible", "compte", "virement", "contrat", "suivante", "precedente");
+
+		config.addDecision("acces compte");
+		config.addDecision("acces virement");
+		config.addDecision("recherche contrat");
+		config.addDecision("effectuer virement");
+		config.addDecision("acces contrat");
+		config.addDecision("acces page suivante");
+		config.addDecision("acces page precedente");
+
+		DecisionTree decisionTree = new DecisionTree(config);
+                decisionTree.initFirstData();
+
+		decisionTree.getTree().generateTree(config.getAttributIndexes());
+
+		decisionTree.print();
+                
+                decisionTree.save();
 	}
 }
