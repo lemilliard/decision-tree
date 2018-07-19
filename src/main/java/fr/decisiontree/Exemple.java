@@ -17,7 +17,8 @@ public class Exemple {
 //		exemple1();
 //		exemple2();
 //                exempleBanque();
-                exempleChatBot();
+//                exempleChatBot();
+                exempleAssuranceAuto();
 	}
 
 	private static void exemple1() {
@@ -153,6 +154,31 @@ public class Exemple {
 
 		DecisionTree decisionTree = new DecisionTree(config);
                 decisionTree.initFirstData();
+
+		decisionTree.getTree().generateTree(config.getAttributIndexes());
+
+		decisionTree.print();
+                
+                decisionTree.save();
+	}
+        
+        private static void exempleAssuranceAuto() {
+		Config config = new Config("./exempleAssuranceAuto");
+
+		config.addAttribut("Puissance", "-100ch", "100 - 200ch", "+200ch");
+		config.addAttribut("Km", "-50000", "50000 - 150000", "+150000");
+		config.addAttribut("NbAnneePermis", "-3", "3 - 5", "+5");
+		config.addAttribut("NbSinistre", "0", "-3", "+3");
+
+		config.addDecision("Tiers");
+		config.addDecision("Tout risque");
+                config.addDecision("Tiers + majoration");
+		config.addDecision("Tout risque + majoration");
+                config.addDecision("Tiers + depannage");
+                config.addDecision("Tiers + depannage + majoration");
+
+		DecisionTree decisionTree = new DecisionTree(config);
+//                decisionTree.initAllData();
 
 		decisionTree.getTree().generateTree(config.getAttributIndexes());
 

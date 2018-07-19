@@ -301,4 +301,67 @@ public class DecisionTree {
                 }
             }
         }
+        
+        public void initAllData(){
+            Stack<Integer> pile = new Stack<>();
+            pile.push(0);
+            Integer i = 0;
+            boolean popWithoutPush = false;
+            boolean popWithPush = false;
+            while(!pile.isEmpty()){
+                if(!popWithPush && pile.lastElement() == config.getAttributs().get(pile.size() - 1).getValues().length - 1){
+                    i = pile.lastElement();
+                    pile.pop();
+                    popWithoutPush = true;
+                    if(!pile.isEmpty()){
+                        i = pile.lastElement();
+                        if(i < config.getAttributs().get(pile.size() - 1).getValues().length - 1){
+                            pile.pop();
+                            pile.push(i+1);
+                            popWithoutPush = false;
+                            popWithPush = true;
+                        }
+                    }
+                } else if(pile.size() < config.getAttributs().size() && !popWithoutPush){
+                    pile.push(0);  
+                    popWithoutPush = false;
+                    popWithPush = false;
+                } else {
+                   i = pile.lastElement();
+                   pile.pop();
+                   pile.push(i+1);
+                   popWithoutPush = false;
+                   popWithPush = false;
+                }
+                HashMap<Integer, Integer> values = new HashMap<>();
+                for(int j = 0; j < pile.size(); j++){
+                    values.put(j, pile.get(j));
+                }
+                if(!values.isEmpty()){
+                    for(int k = 0; k < config.getDecisions().size(); k++){
+                        Entry entry = new Entry(values, k, 1l);
+                        if(tree.getEntries().isEmpty()){
+                            tree.getEntries().add(entry);
+                        }
+                        
+                        if(!containsEntry(entry)){
+                            tree.getEntries().add(entry);
+                        }
+                        
+//                            tree.getEntries().add(entry);
+                    }
+                }
+            }
+        }
+        
+        public boolean containsEntry(Entry e){
+            boolean exist = false;
+            Iterator<Entry> it = tree.getEntries().iterator();
+            while(it.hasNext() && !exist){
+                if(it.next().isEquals(e)){
+                    exist = true;
+                }
+            }
+            return exist;
+        }
 }
