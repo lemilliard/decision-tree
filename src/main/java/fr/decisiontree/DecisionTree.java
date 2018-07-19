@@ -305,6 +305,22 @@ public class DecisionTree {
         public void initAllData(){
             Stack<Integer> pile = new Stack<>();
             pile.push(0);
+            HashMap<Integer, Integer> valInit = new HashMap<>();
+            for(int j = 0; j < pile.size(); j++){
+                valInit.put(j, pile.get(j));
+            }
+            if(!valInit.isEmpty()){
+                for(int k = 0; k < config.getDecisions().size(); k++){
+                    Entry entry = new Entry(valInit, k, 1l);
+                    if(tree.getEntries().isEmpty()){
+                        tree.getEntries().add(entry);
+                    }
+
+                    if(!containsEntry(entry)){
+                        tree.getEntries().add(entry);
+                    }
+                }
+            }
             Integer i = 0;
             boolean popWithoutPush = false;
             boolean popWithPush = false;
