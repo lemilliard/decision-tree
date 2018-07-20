@@ -111,7 +111,7 @@ public class Node {
 		}
 
 		for (int i = 0; i < p.length; i++) {
-			if (p[i] == 0d) {
+			if (p[i] == entriesCount()) {
 				return 0d;
 			}
 		}
@@ -140,7 +140,7 @@ public class Node {
 		}
 
 		for (int i = 0; i < p.length; i++) {
-			if (p[i] == 0) {
+			if (p[i] == entriesCount()) {
 				return 0d;
 			}
 		}

@@ -58,7 +58,7 @@ public class Exemple {
                 Entry entry = decisionTree.entryFromParams(values, config.getIndexOfDecision(decision.getValue()));
 
 		decisionTree.print();
-		decisionTree.save(entry);
+//		decisionTree.save(entry);
 	}
 
 	private static void exemple2() {
@@ -183,6 +183,14 @@ public class Exemple {
 		decisionTree.getTree().generateTree(config.getAttributIndexes());
 
 		decisionTree.print();
+                
+                HashMap<String, String>values = new HashMap<>();
+		values.put("Puissance", "100 - 200ch");
+		values.put("Km", "+150000");
+		values.put("NbAnneePermis", "3 - 5");
+		values.put("NbSinistre", "+3");
+		Result decision = decisionTree.decide(values);
+		System.out.println(decision.getValue());
                 
                 decisionTree.save();
 	}
