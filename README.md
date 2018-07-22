@@ -1,11 +1,13 @@
 # DecisionTree
 
+[![pipeline status](https://gitlab.com/LeMilliard/DecisionTree/badges/master/pipeline.svg)](https://gitlab.com/LeMilliard/DecisionTree/commits/master)
+
 Librairie qui permet de générer et utiliser un arbre de décision, basé sur l'algorithme ID3.
 
 ### Sommaire
 
 * [Configuration](#configuration)
-  * [Configuration d'une version en cours de développement](#configuration-d-une-version-en-cours-de-développement)
+  * [Configuration d'une version en cours de développement](#configuration-dune-version-en-cours-de-développement)
 * [Utilisation](#utilisation)
 
 ### Configuration
