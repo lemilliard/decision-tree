@@ -12,7 +12,6 @@ variables:
 build:
   stage: build
   script:
-    - echo $BINTRAY_USERNAME
     - mvn $MAVEN_CLI_OPTS install
 
 test:
