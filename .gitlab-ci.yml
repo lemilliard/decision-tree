@@ -2,17 +2,17 @@ image: maven:latest
 
 cache:
   paths:
-    - $HOME/.m2/
+    - .m2/repository/
     - target/
 
 variables:
-  CI_DEBUG_TRACE: "true"
   MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
   MAVEN_CLI_OPTS: "-s ./resources/deployment/mvn-settings.xml --batch-mode"
 
 build:
   stage: build
   script:
+    - echo $BINTRAY_USERNAME
     - mvn $MAVEN_CLI_OPTS install
 
 test:
