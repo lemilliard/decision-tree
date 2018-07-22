@@ -1,20 +1,20 @@
 # DecisionTree
 
-Librairie qui permet de générer et utiliser un arbre de décision
+Librairie qui permet de générer et utiliser un arbre de décision, basé sur l'algorithme ID3.
 
-## Sommaire
+### Sommaire
 
+* [Configuration](#configuration)
+  * [Configuration d'une version en cours de développement](#configuration-d-une-version-en-cours-de-développement)
+* [Utilisation](#utilisation)
 
-## Maven Local Repository
+### Configuration
 
-Afin de faciliter l'utilisation de la librairie, il est fortement conseillé de la pousser
-sur le repository maven local. Il suffit de faire comme suit:
+Avant toute chose, il est conseillé de consulter le fichier [LEMILLIARD.md](LEMILLIARD.md)
 
-```sh
-mvn install
-```
+Veillez à bien utiliser Maven comme gestionnaire de dépendances.
 
-Ensuite, il faudra l'inclure dans le projet maven avec la dépendance suivante:
+Il vous suffit alors d'ajouter la dépendance suivante à votre `pom.xml`:
 
 ```xml
 <dependencies>
@@ -22,7 +22,21 @@ Ensuite, il faudra l'inclure dans le projet maven avec la dépendance suivante:
     <dependency>
         <groupId>com.lemilliard</groupId>
         <artifactId>decisiontree</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>${version}</version>
     </dependency>
 </dependencies>
 ```
+
+Remplacez `${version}` par le tag de la version désirée.
+
+##### Configuration d'une version en cours de développement
+
+Afin d'utiliser la dernière version de cette librairie, 
+
+```sh
+mvn install
+```
+
+### Utilisation
+
+// TODO
