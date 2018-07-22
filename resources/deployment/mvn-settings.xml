@@ -4,8 +4,8 @@
     <servers>
         <server>
             <id>bintray-lemilliard-maven</id>
-            <username>${BINTRAY_USERNAME}</username>
-            <password>${BINTRAY_USERNAME}</password>
+            <username>${env.BINTRAY_USERNAME}</username>
+            <password>${env.BINTRAY_USERNAME}</password>
         </server>
     </servers>
 </settings>
