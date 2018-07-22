@@ -1,5 +1,6 @@
 .idea/
+*.iml
+target/
 nbproject/
 out/
-target/
-*.iml
+build.xml

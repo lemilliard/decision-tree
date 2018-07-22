@@ -135,7 +135,7 @@ public class Node {
 		}
 
 		for (Entry entry : entries) {
-			p[entry.getDecision()]+= entry.getCount();
+			p[entry.getDecision()] += entry.getCount();
 		}
 
 		for (int i = 0; i < p.length; i++) {
@@ -256,7 +256,7 @@ public class Node {
 		Double pertinence = 0d;
 		Integer plusPertinent = -1;
 		for (Integer i : listAttributs) {
-			 p = pertinence(i);
+			p = pertinence(i);
 			if (p > pertinence) {
 				pertinence = p;
 				plusPertinent = i;
