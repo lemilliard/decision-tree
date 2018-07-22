@@ -1,4 +1,4 @@
-package fr.decisiontree;
+package com.lemilliard.decisiontree;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,6 @@
-package fr.decisiontree.model;
+package com.lemilliard.decisiontree.model;
 
-import fr.decisiontree.Config;
-import java.math.BigInteger;
+import com.lemilliard.decisiontree.Config;
 
 import java.util.HashMap;
 import java.util.Map;

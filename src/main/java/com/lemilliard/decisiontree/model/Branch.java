@@ -1,4 +1,4 @@
-package fr.decisiontree.model;
+package com.lemilliard.decisiontree.model;
 
 /**
  * Created by tkint on 23/11/2017.

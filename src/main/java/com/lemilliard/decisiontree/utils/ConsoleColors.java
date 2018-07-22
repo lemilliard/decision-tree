@@ -1,4 +1,4 @@
-package fr.decisiontree.utils;
+package com.lemilliard.decisiontree.utils;
 
 /**
  * Created by Thomas on 28/11/2017.

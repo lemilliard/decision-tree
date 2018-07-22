@@ -1,7 +1,7 @@
-package fr.decisiontree;
+package com.lemilliard.decisiontree;
 
-import fr.decisiontree.model.Entry;
-import fr.decisiontree.model.Result;
+import com.lemilliard.decisiontree.model.Entry;
+import com.lemilliard.decisiontree.model.Result;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;

@@ -1,9 +1,8 @@
-package fr.decisiontree;
+package com.lemilliard.decisiontree;
 
-import com.sun.javafx.scene.control.skin.VirtualFlow;
-import fr.decisiontree.model.Entry;
-import fr.decisiontree.model.Node;
-import fr.decisiontree.model.Result;
+import com.lemilliard.decisiontree.model.Entry;
+import com.lemilliard.decisiontree.model.Node;
+import com.lemilliard.decisiontree.model.Result;
 
 import java.io.*;
 import java.nio.file.Files;

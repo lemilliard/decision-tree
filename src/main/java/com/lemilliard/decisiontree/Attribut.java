@@ -1,4 +1,4 @@
-package fr.decisiontree;
+package com.lemilliard.decisiontree;
 
 public class Attribut {
 

@@ -1,11 +1,10 @@
-package fr.decisiontree.model;
+package com.lemilliard.decisiontree.model;
 
-import fr.decisiontree.Config;
-import fr.decisiontree.utils.ConsoleColors;
+import com.lemilliard.decisiontree.Config;
+import com.lemilliard.decisiontree.utils.ConsoleColors;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 /**
