@@ -1,20 +1,22 @@
 # DecisionTree
 
-Librairie qui permet de générer et utiliser un arbre de décision
+[![pipeline status](https://gitlab.com/LeMilliard/DecisionTree/badges/master/pipeline.svg)](https://gitlab.com/LeMilliard/DecisionTree/commits/master)
 
-## Sommaire
+Librairie qui permet de générer et utiliser un arbre de décision, basé sur l'algorithme ID3.
 
+### Sommaire
 
-## Maven Local Repository
+* [Configuration](#configuration)
+  * [Configuration d'une version en cours de développement](#configuration-dune-version-en-cours-de-développement)
+* [Utilisation](#utilisation)
 
-Afin de faciliter l'utilisation de la librairie, il est fortement conseillé de la pousser
-sur le repository maven local. Il suffit de faire comme suit:
+### Configuration
 
-```sh
-mvn install
-```
+Avant toute chose, il est conseillé de consulter le fichier [LEMILLIARD.md](LEMILLIARD.md)
 
-Ensuite, il faudra l'inclure dans le projet maven avec la dépendance suivante:
+Veillez à bien utiliser Maven comme gestionnaire de dépendances.
+
+Il vous suffit alors d'ajouter la dépendance suivante à votre `pom.xml`:
 
 ```xml
 <dependencies>
@@ -22,7 +24,21 @@ Ensuite, il faudra l'inclure dans le projet maven avec la dépendance suivante:
     <dependency>
         <groupId>com.lemilliard</groupId>
         <artifactId>decisiontree</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>${version}</version>
     </dependency>
 </dependencies>
 ```
+
+Remplacez `${version}` par le tag de la version désirée.
+
+##### Configuration d'une version en cours de développement
+
+Afin d'utiliser la dernière version de cette librairie, 
+
+```sh
+mvn install
+```
+
+### Utilisation
+
+// TODO
