@@ -1,3 +1,28 @@
+<table>
+ <tr style="text-align: center">
+  <td>License</td>
+  <td>Master</td>
+  <td>Version</td>
+ </tr>
+ <tr>
+  <td>
+   <a href="https://gitlab.com/lemilliard/DecisionTree/blob/master/LICENSE">
+    <img src="https://img.shields.io/badge/License-MIT-yellow.svg"/>
+   </a>
+  </td>
+  <td>
+   <a href="https://gitlab.com/lemilliard/DecisionTree/commits/master">
+    <img alt="master status" src="https://gitlab.com/lemilliard/DecisionTree/badges/master/pipeline.svg"/>
+   </a>
+  </td>
+  <td>
+   <a href='https://bintray.com/lemilliard/maven/DecisionTree/_latestVersion'>
+    <img src='https://api.bintray.com/packages/lemilliard/maven/DecisionTree/images/download.svg'>
+   </a>
+  </td>
+ </tr>
+</table>
+
 # DecisionTree
 
 [![pipeline status](https://gitlab.com/LeMilliard/DecisionTree/badges/master/pipeline.svg)](https://gitlab.com/LeMilliard/DecisionTree/commits/master)
