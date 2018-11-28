@@ -19,7 +19,8 @@ public class Exemple {
 //		exemple2();
 //      exempleBanque();
 //      exempleChatBot();
-		exempleAssuranceAuto();
+//		exempleAssuranceAuto();
+        exempleMedic();
 	}
 
 	private static void exemple1() {
@@ -194,5 +195,34 @@ public class Exemple {
 		System.out.println(decision.getValue());
 
 		decisionTree.save();
+	}
+        
+        private static void exempleMedic() {
+		Config config = new Config("./exemples/exemple_medic");
+
+		config.addAttribut("fievre", "non", "oui");
+		config.addAttribut("maux de tête", "non", "oui");
+		config.addAttribut("douleur", "non", "oui");
+		config.addAttribut("insomnie", "non", "oui");
+		config.addAttribut("toux", "non", "oui");
+		config.addAttribut("trouble cardiaque", "non", "oui");
+
+		config.addDecision("Aspirine");
+		config.addDecision("Clopidogrel");
+		config.addDecision("Ibuprofene");
+		config.addDecision("Diclofenac");
+		config.addDecision("Fenspiride");
+		config.addDecision("Hydroxyzine");
+		config.addDecision("Dextromethorphane");
+		config.addDecision("Pholcodine");
+		config.addDecision("T'es con ! T'as rien !");
+
+                Integer[] listAllergies = new Integer[1];
+                listAllergies[0] = config.getIndexOfDecision("Aspirine");
+		DecisionTree decisionTree = new DecisionTree(config, listAllergies);
+
+		decisionTree.getTree().generateTree(config.getAttributIndexes());
+
+		decisionTree.print();
 	}
 }

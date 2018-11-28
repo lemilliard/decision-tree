@@ -21,6 +21,12 @@ public class DecisionTree {
 		initDirectory();
 		initData();
 	}
+        
+        public DecisionTree(Config config, Integer[] listFilter) {
+		this.config = config;
+		initDirectory();
+		initData(listFilter);
+	}
 
 	public DecisionTree(Config config, Set<String> params) {
 		this.config = config;
@@ -50,6 +56,12 @@ public class DecisionTree {
 		tree = new Node(config);
 //		creataFileDataManouche();
 		readDataFromFile();
+	}
+        
+        private void initData(Integer[] listFilter) {
+		tree = new Node(config);
+//		creataFileDataManouche();
+		readDataFromFile(listFilter);
 	}
 
 	/**
@@ -92,6 +104,25 @@ public class DecisionTree {
 			while ((line = bufferedReader.readLine()) != null) {
 				// On ajoute à l'arbre l'entry de la ligne courante
 				tree.getEntries().add(Entry.fromText(config, line));
+			}
+		} catch (IOException e) {
+			System.out.println("Aucune données");
+		}
+	}
+        
+        public void readDataFromFile(Integer[] listFilter) {
+		try {
+			File f = new File(getFilePath(dataFileName));
+			BufferedReader bufferedReader = new BufferedReader(new FileReader(f));
+			String line;
+			// Pour chaque ligne
+                        List<Integer> listManouche = Arrays.asList(listFilter);
+			while ((line = bufferedReader.readLine()) != null) {
+				// On ajoute à l'arbre l'entry de la ligne courante
+                                Entry e = Entry.fromText(config, line);
+                                if(!listManouche.contains(e.getDecision())){
+                                    tree.getEntries().add(e);
+                                }
 			}
 		} catch (IOException e) {
 			System.out.println("Aucune données");
