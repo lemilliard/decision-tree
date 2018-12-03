@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,7 +19,7 @@ public class Exemple {
 //      exempleBanque();
 //      exempleChatBot();
 //		exempleAssuranceAuto();
-        exempleMedic();
+		exempleMedic();
 	}
 
 	private static void exemple1() {
@@ -196,12 +195,12 @@ public class Exemple {
 
 		decisionTree.save();
 	}
-        
-        private static void exempleMedic() {
+
+	private static void exempleMedic() {
 		Config config = new Config("./exemples/exemple_medic");
 
 		config.addAttribut("fievre", "non", "oui");
-		config.addAttribut("maux de tête", "non", "oui");
+		config.addAttribut("maux de tÃªte", "non", "oui");
 		config.addAttribut("douleur", "non", "oui");
 		config.addAttribut("insomnie", "non", "oui");
 		config.addAttribut("toux", "non", "oui");
@@ -217,8 +216,8 @@ public class Exemple {
 		config.addDecision("Pholcodine");
 		config.addDecision("T'es con ! T'as rien !");
 
-                Integer[] listAllergies = new Integer[1];
-                listAllergies[0] = config.getIndexOfDecision("Aspirine");
+		Integer[] listAllergies = new Integer[1];
+		listAllergies[0] = config.getIndexOfDecision("Aspirine");
 		DecisionTree decisionTree = new DecisionTree(config, listAllergies);
 
 		decisionTree.getTree().generateTree(config.getAttributIndexes());
